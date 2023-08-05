@@ -9,12 +9,12 @@ import java.util.List;
 @Component
 public class PeopleDAO {
     private List<Person> people = new ArrayList<>();
-    int COUNT = 1;
+    static int COUNT;
 
     {
-        people.add(new Person(COUNT++, "Rakhim", "nuraliev@mail.com"));
-        people.add(new Person(COUNT++, "Jon", "stones@mail.com"));
-        people.add(new Person(COUNT++, "Messi", "leo@mail.com"));
+        people.add(new Person(++COUNT, "Rakhim", "Nuraliev", "nuraliev@mail.com"));
+        people.add(new Person(++COUNT, "Jon", "Stones", "stones@mail.com"));
+        people.add(new Person(++COUNT, "Messi","Leo", "leo@mail.com"));
     }
 
 
@@ -26,4 +26,9 @@ public class PeopleDAO {
         return people.stream().filter(person -> person.getId() == id).findAny().orElse(null);
     }
 
+
+    public void save(Person person){
+        person.setId(++COUNT);
+        people.add(person);
+    }
 }
