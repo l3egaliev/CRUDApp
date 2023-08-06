@@ -1,11 +1,28 @@
 package kg.rakhim.classes.model;
 
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
+import java.lang.annotation.Native;
+
 public class Person {
     private int id;
+    @NotEmpty(message = "Enter the name!")
+    @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters!")
+    @NotBlank(message = "Write with characters")
     private String name;
 
+    @NotEmpty(message = "Enter the surname!")
+    @Size(min = 2, max = 30, message = "Surname should be between 2 and 40 characters!")
+    @NotBlank(message = "Write with characters!")
     private String surname;
+
+    @NotEmpty(message = "Enter the email!")
+    @Email(message = "Enter the valid email!")
+    @NotBlank(message = "Write with characters!")
     private String email;
 
     public Person() {

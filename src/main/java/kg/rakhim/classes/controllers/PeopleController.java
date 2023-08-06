@@ -1,11 +1,14 @@
 package kg.rakhim.classes.controllers;
 
 
+import jakarta.validation.Valid;
 import kg.rakhim.classes.dao.PeopleDAO;
 import kg.rakhim.classes.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -38,7 +41,11 @@ public class PeopleController {
     }
 
     @PostMapping()
-    public String addPerson(@ModelAttribute("person") Person person){
+    public String addPerson(@ModelAttribute("person") @Valid Person person,
+                            BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return "people/new";
+        }
         peopleDAO.save(person);
         return "redirect:/people";
     }
@@ -50,7 +57,11 @@ public class PeopleController {
     }
 
     @PatchMapping("{id}")
-    public String updatePerson(@PathVariable("id") int id,@ModelAttribute("UpdatePerson") Person person){
+    public String updatePerson(@PathVariable("id") int id, @ModelAttribute("UpdatePerson") @Valid Person person,
+                               BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return "people/edit";
+        }
         peopleDAO.update(id,person);
         return "redirect:/people";
     }
